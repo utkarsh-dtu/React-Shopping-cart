@@ -1,12 +1,13 @@
 import React from "react";
 
+// we need to refresh on updating the state
 class CartItem extends React.Component {
   constructor() {
     super();
     this.state = {
       price: 12339,
       title: "Mobile Phone",
-      qty: 2,
+      qty: 1,
       img: "",
     };
 
@@ -17,13 +18,38 @@ class CartItem extends React.Component {
     // in normal function this keyword is not bound to the function
   }
   increaseQuantity = () =>{
-    console.log("increasing");
+    // console.log("increasing");
     //   (this.state.qty)++;
-    console.log(this.state);
+    // console.log(this.state);
+    // this.state.qty+=1;
+
+    // setState form 1
+    // the render function will be automatically be called on using setState
+    // this.setState({
+    //     qty : this.state.qty + 1
+    // });
+
+    // this will do shallow merging on doing this
+    this.setState((prevState) => {
+        return { 
+            qty : prevState.qty + 1
+        }
+    });
   }
   decreaseQuantity = () => {
-    console.log("decreasing");
-    console.log(this.state);
+    // console.log("decreasing");
+    // console.log(this.state);
+    // if(this.state.qty > 0) this.state.qty-=1;
+    if(this.state.qty > 0) {
+        // this.setState({
+        //     qty : this.state.qty - 1
+        // });
+        this.setState((prevState) => {
+            return {
+                qty : prevState.qty - 1
+            }
+        });
+    }
   }
   render() {
     const { price, title, qty } = this.state;
