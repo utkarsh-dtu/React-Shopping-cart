@@ -16,7 +16,26 @@ class CartItem extends React.Component {
 
     // using arrow function will automatically bind the this keyword to the function that
     // in normal function this keyword is not bound to the function
+    // this.testing();
+    
   }
+
+//   testing() {
+//       const promise = new Promise((resolve, reject) => {
+//           setTimeout(() => {
+//             resolve('Done');
+//           }, 5000);
+//       })
+
+//       promise.then((x) => {
+
+//         // setState acts like a synchronous call
+//           this.setState({qty: this.state.qty + 10});
+//           this.setState({qty: this.state.qty + 10});
+//           this.setState({qty: this.state.qty + 10});
+//           console.log('state',x, this.state);
+//       })
+//   }
   increaseQuantity = () =>{
     // console.log("increasing");
     //   (this.state.qty)++;
@@ -25,15 +44,55 @@ class CartItem extends React.Component {
 
     // setState form 1
     // the render function will be automatically be called on using setState
+
+    // on calling setState it will be re-rendered
+    // but here we are calling setState thrice, but render is being called only Once
+    // but due to a concept called batching, react will call setState only once to increase efficiency
+    // it will merge all these setState calls
+
+    // it will take the last call and last object
+    // below in the first two increase it by a large amount, but only the last form will be considered
+    // ------------------------------------------------------
+    // this.setState({
+    //     qty : this.state.qty + 1000
+    // });
+    // this.setState({
+    //     qty : this.state.qty + 32914
+    // });
     // this.setState({
     //     qty : this.state.qty + 1
+    //     // qty : this.state.qty + 1
+    //     // qty : this.state.qty + 4
+    // });
+    // ------------------------------------------------------
+    // now in the second form, although the setState has been called thrice, it will increment by 3, but render is called only once
+    // this will do shallow merging on doing this
+
+    // now react will maintain a queue and keep updating the previous states
+    // because while using this callBack function, we have access to prevState
+    // batching is still performed, means it is re-rendered only once
+    // this.setState((prevState) => {
+    //     return { 
+    //         qty : prevState.qty + 1
+    //     } , () => {
+    //         console.log(this.state);
+    //     }
+    // });
+    // console.log(this.state); this form of setState is asyncchronous, so we cannot rely on this.state because we dont know whether at this point state is the old one or updated one
+    // this.setState((prevState) => {
+    //     return { 
+    //         qty : prevState.qty + 1
+    //     }
     // });
 
-    // this will do shallow merging on doing this
+
+    // the second argument is the callback function which is called when the re-rendering is done
     this.setState((prevState) => {
         return { 
             qty : prevState.qty + 1
         }
+    },()=>{
+        console.log(this.state);
     });
   }
   decreaseQuantity = () => {
@@ -52,6 +111,8 @@ class CartItem extends React.Component {
     }
   }
   render() {
+    console.log('render');
+    
     const { price, title, qty } = this.state;
     return (
       <div className="cart-item">
