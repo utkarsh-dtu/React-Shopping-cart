@@ -12,6 +12,9 @@ class CartItem extends React.Component {
 
     // this.increaseQuantity = this.increaseQuantity.bind(this);
     // this.decreaseQuantity = this.decreaseQuantity.bind(this);
+
+    // using arrow function will automatically bind the this keyword to the function that
+    // in normal function this keyword is not bound to the function
   }
   increaseQuantity = () =>{
     console.log("increasing");
