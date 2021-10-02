@@ -1,6 +1,7 @@
 import React from "react";
 
 // we need to refresh on updating the state
+// Pushing all this to GitHub
 class CartItem extends React.Component {
   constructor() {
     super();
@@ -111,9 +112,10 @@ class CartItem extends React.Component {
     }
   }
   render() {
-    console.log('render');
+    console.log(this.props);
     
-    const { price, title, qty } = this.state;
+    // const { price, title, qty } = this.state;
+    const { price, title, qty } = this.props;
     return (
       <div className="cart-item">
         <div className="left-block">
