@@ -25,12 +25,15 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // fetching from the db
+    // .onSnapshot() is listening for any changes in any documents in the database
     this.db.collection("products").onSnapshot((snapshot) => {
       console.log(snapshot);
       snapshot.docs.map((doc) => {
         console.log(doc.data());
       });
 
+      // filling the product array with all the documents
       const products = snapshot.docs.map((doc) => {
         const data = doc.data();
         data["id"] = doc.id;
@@ -48,12 +51,26 @@ class App extends React.Component {
     // console.log("hey please increase the quantity of ", product);
     const { products } = this.state;
     const index = products.indexOf(product);
-    console.log(index);
+    // console.log(index);
 
-    products[index].qty += 1;
-    this.setState({
-      products,
-    });
+    // products[index].qty += 1;
+    // this.setState({
+    //   products,
+    // });
+
+    const docRef = this.db.collection('products').doc(products[index].id);
+    docRef
+      .update({
+        qty : products[index].qty + 1
+
+      })
+      .then(() => {
+        console.log('document Updated successfully !')
+
+      })
+      .catch(err => {
+        console.log('could not update product',err);
+      })
   };
 
   handleDecreaseQuantity = (product) => {
@@ -61,20 +78,40 @@ class App extends React.Component {
 
     const { products } = this.state;
     const index = products.indexOf(product);
-    products[index].qty -= 1;
+    // products[index].qty -= 1;
 
-    this.setState({
-      products,
-    });
+    // this.setState({
+    //   products,
+    // });
+
+    // const docRef = this.db.collection('products').doc(product[index].id);
+    if(products[index].qty === 0) return ;
+    // returns a reference to the required document in the database
+    const docRef = this.db.collection('products').doc(products[index].id);
+
+    docRef
+      .update({
+        qty : products[index].qty - 1
+      });
+
   };
 
   handleDeleteProduct = (id) => {
     const { products } = this.state;
-    const items = products.filter((item) => item.id !== id);
+    // const items = products.filter((item) => item.id !== id);
 
-    this.setState({
-      products: items,
-    });
+    // this.setState({
+    //   products: items,
+    // });
+    const docRef = this.db.collection('products').doc(id);
+    docRef
+      .delete()
+      .then(() => {
+        console.log("deleted successfully")
+      })
+      .catch((err) => {
+        console.log('Could not delete',err);
+      })
   };
   getCartCount = () => {
     const { products } = this.state;
@@ -119,7 +156,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navbar count={this.getCartCount()} />
-        <button onClick={this.addProduct} style = {{padding: 20, fontSize : 20}}> Add Product</button>
+        {/* <button onClick={this.addProduct} style = {{padding: 20, fontSize : 20}}> Add Product</button> */}
         <Cart
           // passing props to the children
           products={products}
