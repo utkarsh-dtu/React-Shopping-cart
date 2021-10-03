@@ -1,6 +1,9 @@
 import React from "react";
 import CartItem from "./CartItem";
 
+
+// this is function component
+
 const Cart = (props) => {
   // we can pass anything to children via props (like function arguments)
 
