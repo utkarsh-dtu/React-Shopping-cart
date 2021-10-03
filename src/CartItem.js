@@ -2,14 +2,16 @@ import React from "react";
 
 // we need to refresh on updating the state
 // Pushing all this to GitHub
-class CartItem extends React.Component {
-  render() {
-    console.log(this.props);
+
+// now this is a function component and 
+// a function component has access to props by default
+const CartItem = (props) => {
+  
 
     // const { price, title, qty } = this.state;
 
-    const { price, title, qty, id } = this.props.product;
-    const { product, onIncreaseQuantity, onDecreaseQuantity, onDeleteProduct } = this.props;
+    const { price, title, qty, id } = props.product;
+    const { product, onIncreaseQuantity, onDecreaseQuantity, onDeleteProduct } = props;
     return (
       <div className="cart-item">
         <div className="left-block">
@@ -45,7 +47,7 @@ class CartItem extends React.Component {
         </div>
       </div>
     );
-  }
+  
 }
 
 const styles = {
