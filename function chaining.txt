@@ -1,0 +1,24 @@
+// this is function chaining 
+
+class item {
+    constructor(name, qty) {
+        this.name = name;
+        this.qty = qty;
+    }
+    
+    getName() {
+        console.log("name is ", this.name);
+        return this;
+    }
+    
+    getQty() {
+        console.log("quantity is ", this.qty);
+        return this;
+    }
+}
+
+
+const phone = new item("nokia", 2);
+phone.getName().getQty();
+// phone.getQty()
+
