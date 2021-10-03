@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+In this project we have implemented a simple shopping cart, where the buyer can add, remove items, increase or decresae the quantity of each, and also see information about the total number of items and total price
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
