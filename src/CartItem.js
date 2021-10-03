@@ -3,23 +3,7 @@ import React from "react";
 // we need to refresh on updating the state
 // Pushing all this to GitHub
 class CartItem extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      price: 12339,
-      title: "Mobile Phone",
-      qty: 1,
-      img: "",
-    };
-
-    // this.increaseQuantity = this.increaseQuantity.bind(this);
-    // this.decreaseQuantity = this.decreaseQuantity.bind(this);
-
-    // using arrow function will automatically bind the this keyword to the function that
-    // in normal function this keyword is not bound to the function
-    // this.testing();
-    
-  }
+  
 
 //   testing() {
 //       const promise = new Promise((resolve, reject) => {
@@ -115,9 +99,11 @@ class CartItem extends React.Component {
     console.log(this.props);
     
     // const { price, title, qty } = this.state;
-    const { price, title, qty } = this.props;
+    
+    const { price, title, qty } = this.props.product;
     return (
       <div className="cart-item">
+        
         <div className="left-block">
           <img style={styles.image} />
         </div>
