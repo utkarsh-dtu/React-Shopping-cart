@@ -12,21 +12,21 @@ class Cart extends React.Component {
           title: "watch",
           qty: 1,
           img: "",
-          id: 2,
+          id: 1,
         },
         {
           price: 12339,
           title: "Mobile Phone",
           qty: 1,
           img: "",
-          id: 3,
+          id: 2,
         },
         {
           price: 52304,
           title: "Laptop",
           qty: 1,
           img: "",
-          id: 2,
+          id: 3,
         },
       ],
     };
@@ -38,14 +38,46 @@ class Cart extends React.Component {
     // in normal function this keyword is not bound to the function
     // this.testing();
   }
+
+  handleIncreaseQuantity = (product) => {
+    // console.log("hey please increase the quantity of ", product);
+    const {products} = this.state;
+    const index = products.indexOf(product);
+    console.log(index);
+  
+    products[index].qty +=1;
+    this.setState({
+        products 
+    });
+  };
+
+  handleDecreaseQuantity = (product) => {
+    if(product.qty === 0) return;
+    
+    const {products} = this.state;
+    const index = products.indexOf(product);
+    products[index].qty-=1;
+
+    this.setState({
+        products
+    });
+
+
+  }
   render() {
-    const products = this.state;
+    // const products = this.state;
+    const {products} = this.state;
     return (
       <div className="cart">
-        {this.state.products.map((product) => {
-          return <CartItem product={product} key={product.id} func = {() => console.log('sdsf')}
-        
-          />;
+        {products.map((product) => {
+          return (
+            <CartItem
+              product={product}
+              key={product.id}
+              onIncreaseQuantity={this.handleIncreaseQuantity}
+              onDecreaseQuantity = {this.handleDecreaseQuantity}
+            />
+          );
         })}
       </div>
     );
